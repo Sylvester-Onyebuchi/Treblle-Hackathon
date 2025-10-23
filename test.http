@@ -1,0 +1,31 @@
+GET http://localhost:8081/success/sort/before?createdAt=2025-10-23T17:22:56.218509
+Accept: application/json
+
+###
+GET http://localhost:8081/success/all-success-log
+Accept: application/json
+
+###
+GET http://localhost:8081/failed-log/all-failed-logs
+Accept: application/json
+
+###
+POST http://localhost:8081/api/user/new-user
+Content-Type: application/json
+
+{
+  "name": "Sylvester Onah",
+  "email": "onyisy@gmail.com"
+}
+
+###
+GET http://localhost:8081/api/user/2
+Accept: application/json
+
+###
+
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=IntelliJ IDEA
+
+###

@@ -1,0 +1,53 @@
+services:
+  app:
+    build: .
+    container_name: treblle-hackathon
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/hackathon
+      SPRING_DATASOURCE_USERNAME: treblle
+      SPRING_DATASOURCE_PASSWORD: treblle
+    ports:
+      - "8081:8081"
+    networks:
+      - app-net
+  postgres:
+    image: 'postgres'
+    restart: always
+    environment:
+      - POSTGRES_DB=hackathon
+      - POSTGRES_PASSWORD=treblle
+      - POSTGRES_USER=treblle
+    ports:
+      - '5435:5432'
+    volumes:
+      - hackathon_data:/var/lib/postgresql/data
+    networks:
+      - app-net
+
+
+  pgadmin:
+    container_name: hackathon_pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8000:80"
+    depends_on:
+      - postgres
+    restart: always
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - app-net
+
+
+volumes:
+  hackathon_data:
+  pgadmin_data:
+networks:
+  app-net:
+    driver: bridge
+
