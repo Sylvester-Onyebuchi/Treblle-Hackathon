@@ -1,18 +1,28 @@
 package com.sylvester.trebllehackathon.controller;
 
 import com.sylvester.trebllehackathon.dto.CreateUserRequest;
+import com.sylvester.trebllehackathon.dto.LoginRequest;
 import com.sylvester.trebllehackathon.dto.Response;
 import com.sylvester.trebllehackathon.entity.User;
+import com.sylvester.trebllehackathon.jwt.JwtService;
 import com.sylvester.trebllehackathon.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @RestController
@@ -21,6 +31,8 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     @Operation(summary = "Save a new user to the database")
     @ApiResponses(value = {
@@ -28,7 +40,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "User already exist"),
             @ApiResponse(responseCode = "500", description = "Something went wrong")
     })
-    @PostMapping("/new-user")
+    @PostMapping("/user/new-user")
     public ResponseEntity<Response> newUser(@RequestBody CreateUserRequest request) {
         Response response = userService.createUser(request);
         return ResponseEntity.ok(response);
@@ -61,6 +73,47 @@ public class UserController {
         Response response = userService.updateUser(id, request);
         return ResponseEntity.ok(response);
     }
+
+    @Operation(summary = "Login as a  user")
+    @PostMapping("/user/login")
+    public ResponseEntity<Map<String,String>> loginUser(@Valid @RequestBody LoginRequest request){
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        if(authentication.isAuthenticated()){
+            String jwt = jwtService.generateToken(request.getEmail());
+
+            ResponseCookie cookie = ResponseCookie.from("jwtToken", jwt)
+                    .httpOnly(true)
+                    .secure(true)
+                    .path("/")
+                    .maxAge(60 * 60 * 12)
+                    .sameSite("Strict")
+                    .build();
+
+            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
+                    .body(Map.of("Login Successful",jwt));
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
+
+    }
+
+
+
+    @Operation(summary = "Logout as a  user")
+    @PostMapping("/user/logout")
+    public ResponseEntity<?> logoutUser(){
+        ResponseCookie cookie = ResponseCookie.from("jwtToken", "")
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .sameSite("Strict")
+                .maxAge(0)
+                .build();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .body(Map.of("message","Logout successful!"));
+    }
+
 
     @Operation(summary = "Delete a user using user id")
     @ApiResponses(value = {

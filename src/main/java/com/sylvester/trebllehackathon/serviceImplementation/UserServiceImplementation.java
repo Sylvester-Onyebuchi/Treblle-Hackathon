@@ -5,8 +5,10 @@ import com.sylvester.trebllehackathon.entity.User;
 import com.sylvester.trebllehackathon.exception.UserAlreadyExistException;
 import com.sylvester.trebllehackathon.exception.UserNotFoundException;
 import com.sylvester.trebllehackathon.repository.UserRepository;
+import com.sylvester.trebllehackathon.service.ApiUnSuccessfulLogsService;
 import com.sylvester.trebllehackathon.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -18,6 +20,8 @@ import java.util.Optional;
 public class UserServiceImplementation implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public Response createUser(CreateUserRequest request) {
@@ -27,16 +31,21 @@ public class UserServiceImplementation implements UserService {
             throw new UserAlreadyExistException("User already exists");
         }
 
-        User newUser = User.builder()
-                .name(request.getName())
-                .email(request.getEmail())
-                .build();
-        User savedUser = userRepository.save(newUser);
-        return Response.builder()
-                .message("User has been created successfully!")
-                .name(savedUser.getName())
-                .email(savedUser.getEmail())
-                .build();
+
+            User newUser = User.builder()
+                    .name(request.getName())
+                    .email(request.getEmail())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .build();
+            User savedUser = userRepository.save(newUser);
+            return Response.builder()
+                    .message("User has been created successfully!")
+                    .name(savedUser.getName())
+                    .email(savedUser.getEmail())
+                    .build();
+
+
+
 
     }
 
