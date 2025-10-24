@@ -12,6 +12,7 @@ FROM openjdk:21-jdk AS runner
 WORKDIR /app
 COPY --from=builder /app/target/hackathon.jar app.jar
 
-EXPOSE 8081
+ENV PORT=8081
+EXPOSE ${PORT}
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=${PORT}", "--server.address=0.0.0.0"]
