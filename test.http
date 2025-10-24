@@ -1,5 +1,11 @@
+GET https://hackathon-treblle-project-b3c262804153.herokuapp.com/api/success/logs/all-success-logs
+Accept: application/json
+
+###
 GET https://hackathon-treblle-project-b3c262804153.herokuapp.com/api/failed/logs/all-failed-logs
 Accept: application/json
+
+
 
 ###
 GET http://localhost:8081/success/sort/before?createdAt=2025-10-23T17:22:56.218509
