@@ -34,11 +34,13 @@ public class SecurityConfiguration {
                                 "/api/users/user/login",
                                 "/api/users/user/new-user",
                                 "/v3/api-docs/**",
-                                "/swagger-ui.html/",
-                                "/swagger-ui.html/**",
-                                "/swagger-ui/index.html",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
                                 "/swagger-resources/**",
-                                "/webjars/**"
+                                "/webjars/**",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**"
 
                         ).permitAll().anyRequest().authenticated());
 
@@ -65,10 +67,6 @@ public class SecurityConfiguration {
                     response.getWriter().write(json);
                 })
         );
-        http.securityMatcher("/**")
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-                        .anyRequest().authenticated());
         http.sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authenticationProvider(authenticationProvider());
