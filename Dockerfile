@@ -15,4 +15,4 @@ COPY --from=builder /app/target/hackathon.jar app.jar
 ENV PORT=8081
 EXPOSE ${PORT}
 
-ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=${PORT}", "--server.address=0.0.0.0"]
+ENTRYPOINT ["java", "-jar", "app.jar","--spring.profiles.active=prod", "--server.port=${PORT}", "--server.address=0.0.0.0"]
