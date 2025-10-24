@@ -32,7 +32,12 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests.requestMatchers(
                                 "/api/users/user/login",
-                                "/api/users/user/new-user").permitAll().anyRequest().authenticated());
+                                "/api/users/user/new-user",
+                                "/v2/api-docs/**",
+                                "/swagger-ui/**",
+                                "/webjars/**",
+                                "/swagger.ui.html"
+                        ).permitAll().anyRequest().authenticated());
 
         http.exceptionHandling(ex -> ex
                 .authenticationEntryPoint((request, response, authException) -> {
