@@ -34,8 +34,9 @@ public class SecurityConfiguration {
                                 "/api/users/user/login",
                                 "/api/users/user/new-user",
                                 "/v2/api-docs/**",
-                                "/webjars/**",
+                                "/swagger-ui/**",
                                 "/swagger-ui/index.html"
+
                         ).permitAll().anyRequest().authenticated());
 
         http.exceptionHandling(ex -> ex
