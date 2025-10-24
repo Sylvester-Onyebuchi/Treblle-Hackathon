@@ -87,6 +87,7 @@ public class ApiLogAspect {
             ApiUnsuccessfulLogs unsuccessful = ApiUnsuccessfulLogs.builder()
                     .errorType(errorType)
                     .method(request.getMethod())
+                    .path(request.getRequestURI())
                     .description(description)
                     .responseCode(statusCode)
                     .responseTime(duration)

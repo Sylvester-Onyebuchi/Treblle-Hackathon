@@ -1,3 +1,7 @@
+GET https://hackathon-treblle-project-b3c262804153.herokuapp.com/api/failed/logs/all-failed-logs
+Accept: application/json
+
+###
 GET http://localhost:8081/success/sort/before?createdAt=2025-10-23T17:22:56.218509
 Accept: application/json
 
@@ -10,7 +14,7 @@ GET http://localhost:8081/failed-log/all-failed-logs
 Accept: application/json
 
 ###
-POST http://localhost:8081/api/user/new-user
+POST https://hackathon-treblle-project-b3c262804153.herokuapp.com/api/users/new-user
 Content-Type: application/json
 
 {
@@ -19,7 +23,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8081/api/user/2
+GET https://hackathon-treblle-project-b3c262804153.herokuapp.com/api/users/user/1
 Accept: application/json
 
 ###
