@@ -5,7 +5,6 @@ import com.sylvester.trebllehackathon.entity.User;
 import com.sylvester.trebllehackathon.exception.UserAlreadyExistException;
 import com.sylvester.trebllehackathon.exception.UserNotFoundException;
 import com.sylvester.trebllehackathon.repository.UserRepository;
-import com.sylvester.trebllehackathon.service.ApiUnSuccessfulLogsService;
 import com.sylvester.trebllehackathon.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
