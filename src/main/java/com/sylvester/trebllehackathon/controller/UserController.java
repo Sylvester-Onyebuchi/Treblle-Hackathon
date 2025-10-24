@@ -76,7 +76,7 @@ public class UserController {
 
     @Operation(summary = "Login as a  user")
     @PostMapping("/user/login")
-    public ResponseEntity<Map<String,String>> loginUser(@Valid @RequestBody LoginRequest request){
+    public ResponseEntity<Map<String,String>> loginUser(@RequestBody LoginRequest request){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         if(authentication.isAuthenticated()){
