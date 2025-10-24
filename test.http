@@ -23,7 +23,7 @@ Content-Type: application/json
 }
 
 ###
-GET https://hackathon-treblle-project-b3c262804153.herokuapp.com/api/users/user/1
+GET https://hackathon-treblle-project-b3c262804153.herokuapp.com/api/users/user/2
 Accept: application/json
 
 ###
