@@ -33,9 +33,11 @@ public class SecurityConfiguration {
                         authorizeRequests.requestMatchers(
                                 "/api/users/user/login",
                                 "/api/users/user/new-user",
-                                "/v2/api-docs/**",
+                                "/v3/api-docs/**",
                                 "/swagger-ui/**",
-                                "/swagger-ui/index.html"
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/webjars/**"
 
                         ).permitAll().anyRequest().authenticated());
 
