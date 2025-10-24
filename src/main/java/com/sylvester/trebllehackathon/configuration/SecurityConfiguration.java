@@ -65,6 +65,10 @@ public class SecurityConfiguration {
                     response.getWriter().write(json);
                 })
         );
+        http.securityMatcher("/**")
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                        .anyRequest().authenticated());
         http.sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authenticationProvider(authenticationProvider());
