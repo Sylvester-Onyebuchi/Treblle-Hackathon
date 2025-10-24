@@ -79,6 +79,7 @@ class ApiUnsuccessfulLogServiceImplementationTest {
         verifyNoMoreInteractions(unsuccessfulLogsRepository);
     }
 
+
     @Test
     void findAllFailedLogsByResponseCodeTest() {
         when(unsuccessfulLogsRepository.findAllByResponseCode(anyInt())).thenReturn(apiUnsuccessfulLogs);

@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/failed")
+@RequestMapping("/api/failed/logs")
 @RequiredArgsConstructor
 @Tag(name = "Success API", description = "Success related API logs")
 public class ApiUnsuccessfulController {

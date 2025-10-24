@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Random;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 @Tag(name = "User API", description = "User related APIs")
 @RequiredArgsConstructor
 public class UserController {
@@ -41,7 +41,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found"),
 
     })
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     public ResponseEntity<User> getUser(@PathVariable long id) {
         return ResponseEntity.ok(userService.getUserById(id));
 
@@ -50,13 +50,13 @@ public class UserController {
 
     @Operation(summary = "Get all the users")
     @ApiResponse(responseCode = "200", description = "List all the users")
-    @GetMapping("/users")
+    @GetMapping("/all-users")
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @Operation(summary = "Update user information using userId")
-    @PutMapping("/update/{id}")
+    @PutMapping("/user/update/{id}")
     public ResponseEntity<Response> updateUser(@PathVariable long id, @RequestBody CreateUserRequest request) {
         Response response = userService.updateUser(id, request);
         return ResponseEntity.ok(response);
@@ -68,7 +68,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found"),
 
     })
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/user/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok().build();

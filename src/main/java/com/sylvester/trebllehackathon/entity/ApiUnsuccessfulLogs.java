@@ -21,6 +21,7 @@ public class ApiUnsuccessfulLogs {
     private Long id;
     private String errorType;
     private String method;
+    private String path;
     private int responseCode;
     private long responseTime;
     private String description;

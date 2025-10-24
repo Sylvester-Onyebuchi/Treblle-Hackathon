@@ -15,9 +15,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/success")
+@RequestMapping("/api/success/logs")
 @RequiredArgsConstructor
-@Tag(name = "Failed API", description = "Failed related API logs")
+@Tag(name = "Failed APIs", description = "Failed related API logs")
 public class ApiSuccessController {
 
     private final ApiSuccessLogsService apiSuccessLogsService;
@@ -31,7 +31,7 @@ public class ApiSuccessController {
 
     @Operation(summary = "Get all the success calls")
     @ApiResponse(responseCode = "200", description = "List all the success API calls")
-    @GetMapping("/all-success-log")
+    @GetMapping("/all-success-logs")
     public ResponseEntity<List<ApiSuccessLogs>> getAllSuccessLogs() {
         List<ApiSuccessLogs> apiSuccessLogs = apiSuccessLogsService.getApiSuccessLogs();
         return ResponseEntity.ok().body(apiSuccessLogs);
@@ -41,7 +41,7 @@ public class ApiSuccessController {
 
 
     @Operation(summary = "Fetching the Success logs by the method")
-    @GetMapping("/method")
+    @GetMapping("/filter/method")
     public ResponseEntity<List<ApiSuccessLogs>> getSuccessLogsByMethodContainingIgnoreCase(@RequestParam String method) {
         List<ApiSuccessLogs> apiSuccessLogs =  apiSuccessLogsService.findApiSuccessLogsByMethodContainingIgnoreCase(method);
         return ResponseEntity.ok().body(apiSuccessLogs);

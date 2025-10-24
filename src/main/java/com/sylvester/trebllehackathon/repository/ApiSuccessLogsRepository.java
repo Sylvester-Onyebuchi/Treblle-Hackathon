@@ -27,5 +27,4 @@ public interface ApiSuccessLogsRepository extends JpaRepository<ApiSuccessLogs, 
     List<ApiSuccessLogs> findAllByCreatedAt(LocalDateTime createdAt);
 
 
-    Object findApiSuccessLogsByResponseTime(long responseTime);
 }
