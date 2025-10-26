@@ -1,17 +1,21 @@
 package com.sylvester.trebllehackathon.controller;
 
 import com.sylvester.trebllehackathon.entity.ApiSuccessLogs;
+import com.sylvester.trebllehackathon.repository.ApiSuccessLogsRepository;
 import com.sylvester.trebllehackathon.service.ApiSuccessLogsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -21,11 +25,18 @@ import java.util.List;
 public class ApiSuccessController {
 
     private final ApiSuccessLogsService apiSuccessLogsService;
+    private final ApiSuccessLogsRepository apiSuccessLogsRepository;
 
     @PostMapping("/success-logs")
     public ResponseEntity<Void> saveSuccessLogs(@RequestBody ApiSuccessLogs apiSuccessLogs) {
         apiSuccessLogsService.save(apiSuccessLogs);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/recent")
+    public ResponseEntity<Iterable<ApiSuccessLogs>> getRecentSuccessLogs(){
+        PageRequest pageRequest = PageRequest.of(0, 11, Sort.by("createdAt").descending());
+        return ResponseEntity.ok(apiSuccessLogsRepository.findAll(pageRequest).getContent());
     }
 
 
